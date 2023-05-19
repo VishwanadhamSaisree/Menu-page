@@ -1,113 +1,211 @@
-import Image from 'next/image'
+'use client'
+import { StarIcon } from '@radix-ui/react-icons';
+import React,{useState} from 'react';
+import * as NavigationMenu from '@radix-ui/react-navigation-menu';
+import classNames from 'classnames';
+import { CaretDownIcon } from '@radix-ui/react-icons';
+import './globals.css';
 
-export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+function NavigationMenuDemo() {
+    const [isAdminMenuOpen, setIsAdminMenuOpen] = useState(false);
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+    const handleAdminMenuToggle = () => {
+      setIsAdminMenuOpen(!isAdminMenuOpen);
+    };
+  
+    const handleLogout = () => {
+      // Handle logout logic here
+    };
+    
+    
+  const handleSearch =(event) =>{
+      event.preventDefault();
+      const searchQuery = event.target.elements.search.value;
+ console.log('Search Query:', searchQuery);
+     };
+    const ListItem = React.forwardRef(({ className, children, title, ...props }, forwardedRef) => (
+        <li>
+          <NavigationMenu.Link asChild>
+            <a className={classNames('ListItemLink', className)} {...props} ref={forwardedRef}>
+              <div className="ListItemHeading">{title}</div>
+              <p className="ListItemText">{children}</p>
+            </a>
+          </NavigationMenu.Link>
+        </li>
+      ));
+    
+    return (
+         <NavigationMenu.Root className="NavigationMenuRoot">
 
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+{/**/}
+ <div className="LogoContainer">
+                <img style={{ width: "130px" }} src="https://synergyers.com/wp-content/uploads/2023/03/WhatsApp_Image_2023-03-31_at_11.30.58_AM-removebg-preview-e1680259468273.png" alt="logo" className="LogoImage" />
+            </div>
+            <div className="SearchBarContainer">
+            <form className="SearchBar" onSubmit={handleSearch}>
+                <input type="text" placeholder="Search..." className="SearchInput" />
+                <button type="submit" className="SearchButton">Search</button>
+           {/* <i class="fa fa-file-text-alt"></i> */}
+            </form>
+            </div>
+            
+            <div className="AdminMenu">
+          <button className="AdminMenuToggle" onClick={handleAdminMenuToggle}>
+            Administration <CaretDownIcon className="CaretDown" aria-hidden />
+          </button>
+          {isAdminMenuOpen && (
+            <div className="AdminMenuContent">
+              <ul className="AdminMenuList">
+                <li>
+                  <button onClick={handleLogout} className="LogoutButton">
+                    Logout
+                  </button>
+                </li>
+                
+              </ul>
+            
+            </div>
+          )}
+        
+            </div>
+            <div className="MenuContainer">
+        <NavigationMenu.List className="NavigationMenuList">
+        <StarIcon className="StarIcon" aria-hidden style={{ fontSize: '50px' }}  />
+        
+                <NavigationMenu.Item>
+                    <NavigationMenu.Trigger className="NavigationMenuTrigger">
+                        
+                        <CaretDownIcon className="CaretDown" aria-hidden />
+                    </NavigationMenu.Trigger>
+                    <NavigationMenu.Content className="NavigationMenuContent">
+                        <ul className="List one">
+                            <li style={{ gridRow: 'span 4' }}>
+                                <NavigationMenu.Link asChild>
+                                    <a className="Callout" href="/"><svg aria-hidden width="38" height="38" viewBox="0 0 25 25" fill="white">
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
+                                        {/* <path d="M12 25C7.58173 25 4 21.4183 4 17C4 12.5817 7.58173 9 12 9V25Z"></path>
+    <path d="M12 0H4V8H12V0Z"></path>
+    <path d="M17 8C19.2091 8 21 6.20914 21 4C21 1.79086 19.2091 0 17 0C14.7909 0 13 1.79086 13 4C13 6.20914 14.7909 8 17 8Z"></path> */}
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+                                    </svg>
+                                        <div className="CalloutHeading"></div>
+                                        {/* <p className="CalloutText"></p> */}
+                                    </a>
+                                </NavigationMenu.Link>
+                            </li>
+
+                            <ListItem href="https://stitches.dev/">
+                                Add page to Favourties
+                            </ListItem>
+                            <ListItem href="/colors">
+                                Manage Favourtie
+                            </ListItem>
+
+                            <ListItem href="https://icons.radix-ui.com/">
+                                Manage Folders
+                            </ListItem>
+                            <ListItem href="https://icons.radix-ui.com/">
+                                Help
+                            </ListItem>
+                        </ul>
+                    </NavigationMenu.Content>
+                </NavigationMenu.Item>
+
+                <NavigationMenu.Item>
+                    <NavigationMenu.Trigger className="NavigationMenuTrigger">
+
+                        Setup <CaretDownIcon className="CaretDown" aria-hidden />
+                    </NavigationMenu.Trigger>
+                    <NavigationMenu.Content className="NavigationMenuContent">
+                        <ul className="List two">
+                            <ListItem title="Introduction" href="/docs/primitives/overview/introduction">
+                                Build high-quality.
+                            </ListItem>
+                            <ListItem title="Getting started" href="/docs/primitives/overview/getting-started">
+                                Getting Radix Primitives
+                            </ListItem>
+                            <ListItem title="Styling" href="/docs/primitives/overview/styling">
+                                Unstyled and compatible with any styling solution.
+                            </ListItem>
+                            <ListItem title="Animation" href="/docs/primitives/overview/animation">
+                                Use CSS keyframes or any animation.
+                            </ListItem>
+                            <ListItem title="Accessibility" href="/docs/primitives/overview/accessibility">
+                                Tested in a range of browsers.
+                            </ListItem>
+                            <ListItem title="Releases" href="/docs/primitives/overview/releases">
+                                Radix Primitives releases and their changelogs.
+                            </ListItem>
+                        </ul>
+                    </NavigationMenu.Content>
+                </NavigationMenu.Item>
+
+                <NavigationMenu.Item>
+                    <NavigationMenu.Link className="NavigationMenuLink" href="https://www.linkedin.com/uas/login-submit">
+                        Lists
+                    </NavigationMenu.Link>
+                </NavigationMenu.Item>
+                <NavigationMenu.Item>
+                    <NavigationMenu.Link className="NavigationMenuLink" href="https://github.com/radix-ui">
+                        PreSales
+                    </NavigationMenu.Link>
+                </NavigationMenu.Item>
+                <NavigationMenu.Item>
+                    <NavigationMenu.Link className="NavigationMenuLink" href="https://github.com/radix-ui">
+                        Inventory
+                    </NavigationMenu.Link>
+                </NavigationMenu.Item>
+                <NavigationMenu.Item>
+                    <NavigationMenu.Link className="NavigationMenuLink" href="https://github.com/radix-ui">
+                        Sales
+                    </NavigationMenu.Link>
+                </NavigationMenu.Item>
+                <NavigationMenu.Item>
+                    <NavigationMenu.Link className="NavigationMenuLink" href="https://github.com/radix-ui">
+                        Accounting
+                    </NavigationMenu.Link>
+                </NavigationMenu.Item>
+                <NavigationMenu.Item>
+                    <NavigationMenu.Link className="NavigationMenuLink" href="https://github.com/radix-ui">
+                        Reports
+                    </NavigationMenu.Link>
+                </NavigationMenu.Item>
+                <NavigationMenu.Item>
+                    <NavigationMenu.Link className="NavigationMenuLink" href="https://github.com/radix-ui">
+                        Schedule
+                    </NavigationMenu.Link>
+                </NavigationMenu.Item>
+               
+
+
+
+                <NavigationMenu.Indicator className="NavigationMenuIndicator">
+                    <div className="Arrow" />
+                </NavigationMenu.Indicator>
+            
+            <div className="ViewportPosition">
+                <NavigationMenu.Viewport className="NavigationMenuViewport" />
+            </div>
+           
+            </NavigationMenu.List>
+            </div>
+        </NavigationMenu.Root>
+
+        
+        
+    );
 }
+
+const ListItem = React.forwardRef(({ className, children, title, ...props }, forwardedRef) => (
+  <li>
+    <NavigationMenu.Link asChild>
+      <a className={classNames('ListItemLink', className)} {...props} ref={forwardedRef}>
+        <div className="ListItemHeading">{title}</div>
+        <p className="ListItemText">{children}</p>
+      </a>
+    </NavigationMenu.Link>
+  </li>
+));
+
+export default NavigationMenuDemo;
